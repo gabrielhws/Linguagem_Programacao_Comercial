@@ -12,7 +12,7 @@ namespace Polimorfismo
         public override void Salario()
         {
             salario *= 10;
-            Console.WriteLine("Seu salário é: " + salario);
+            base.Salario();
         }
 
     }

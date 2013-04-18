@@ -9,6 +9,9 @@ namespace Polimorfismo
     class Funcionario : Pessoa
     {
         // Recebe o mesmo salário de uma pessoa
-        
+        public override void Salario()
+        {
+            base.Salario();
+        }
     }
 }

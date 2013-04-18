@@ -9,7 +9,7 @@ namespace Polimorfismo
     class Program
     {
         static void Main(string[] args) {
-            string op = null;
+            string op = string.Empty;
             do
             {
                 Pessoa p = null;
