@@ -8,7 +8,7 @@ namespace Polimorfismo
 {
     class Vendedor : Pessoa
     {
-        public void Viajar()
+        public override void Viajar()
         {
             Console.WriteLine("Viajar em Vendedor");
         }

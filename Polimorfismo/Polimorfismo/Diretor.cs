@@ -8,7 +8,7 @@ namespace Polimorfismo
 {
     class Diretor : Pessoa
     {
-        public void Viajar()
+        public override void Viajar()
         {
             Console.WriteLine("Viajar em Diretor");
         }

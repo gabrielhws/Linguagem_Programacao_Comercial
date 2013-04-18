@@ -8,7 +8,7 @@ namespace Polimorfismo
 {
     class Program
     {
-        public void Main(string[] args) {
+        public static void Main(string[] args) {
             Pessoa p = new Pessoa();
             IrViajar(p);
         }

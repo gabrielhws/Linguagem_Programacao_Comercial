@@ -8,7 +8,7 @@ namespace Polimorfismo
 {
     public class Pessoa
     {
-        public void Viajar() { 
+        public virtual void Viajar() { 
             Console.WriteLine("Viajar em Pessoa");
         }
     }
