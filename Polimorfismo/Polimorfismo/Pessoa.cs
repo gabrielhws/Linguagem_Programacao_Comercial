@@ -8,9 +8,9 @@ namespace Polimorfismo
 {
     public class Pessoa
     {
-        public virtual void Viajar() { 
-            Console.WriteLine("Viajar em Pessoa");
-            Console.WriteLine("Inicio da Viagem");
+        protected double salario = 500;
+        public virtual void Salario() {
+            Console.WriteLine("Seu salário é: " + salario);
         }
     }
 }

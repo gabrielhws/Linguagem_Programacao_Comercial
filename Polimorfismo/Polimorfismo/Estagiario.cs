@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Polimorfismo
 {
-    class Diretor : Pessoa
+    class Estagiario : Pessoa
     {
-        // Recebe 10x mais que uma pessoa
+        // Recebe metade do valor do salário de uma Pessoa
         public override void Salario()
         {
-            salario *= 10;
+            salario /= 2;
             Console.WriteLine("Seu salário é: " + salario);
         }
-
     }
 }

@@ -8,10 +8,12 @@ namespace Polimorfismo
 {
     class Vendedor : Pessoa
     {
-        public override void Viajar()
+        // Recebe 5x mais que uma pessoa mais 5%
+        public override void Salario()
         {
-            Console.WriteLine("Viajar em Vendedor");
-            Console.WriteLine("Fim");
+            salario = (salario * 5) * 1.05;
+            base.Salario();
         }
+
     }
 }
