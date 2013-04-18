@@ -8,9 +8,15 @@ namespace Polimorfismo
 {
     class Program
     {
-        public static void Main(string[] args) {
+        static void Main(string[] args) {
             Pessoa p = new Pessoa();
             IrViajar(p);
+
+            Diretor d = new Diretor();
+            IrViajar(d);
+
+            Vendedor v = new Vendedor();
+            IrViajar(v);
         }
 
         static void IrViajar(Pessoa p) {

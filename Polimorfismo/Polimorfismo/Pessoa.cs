@@ -10,6 +10,7 @@ namespace Polimorfismo
     {
         public virtual void Viajar() { 
             Console.WriteLine("Viajar em Pessoa");
+            Console.WriteLine("Inicio da Viagem");
         }
     }
 }

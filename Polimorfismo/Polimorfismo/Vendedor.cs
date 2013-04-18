@@ -11,6 +11,7 @@ namespace Polimorfismo
         public override void Viajar()
         {
             Console.WriteLine("Viajar em Vendedor");
+            Console.WriteLine("Fim");
         }
     }
 }
