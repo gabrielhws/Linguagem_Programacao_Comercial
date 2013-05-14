@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteMaster.master.cs" Inherits="tpf.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">    
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="theme-default layout">
+    <form id="frmMain" runat="server">
+        <div id="full-height-container">
+            <header id="header"> 
+			    <nav class="header">
+				    <div class="header-inner">
+					    <div class="header-primary">
+						    <h1 id="logo">
+							    <a href="#">Scrum</a>
+						    </h1>
+						    <div class="open-menu">				
+							    &gt;	
+							    <ul class="menu">
+								    <li><asp:LinkButton ID="lbtnBacklog" PostBackUrl="~/Backlog.aspx" runat="server" >Product Backlog</asp:LinkButton></li>
+								    <li>Sprints</li>
+								    <li><asp:LinkButton ID="lbtnBurndown" PostBackUrl="~/Burndown.aspx" runat="server" >Burndown Chart</asp:LinkButton></li>
+							    </ul>
+						    </div>
+					    </div>
+					    <div class="header-secondary">
+						    <ul class="nav">
+							    <li>
+                                    <asp:TextBox ID="txtSearch" CssClass="quick-search" Text="Search" runat="server"></asp:TextBox>
+							    </li>
+							    <li>
+                                    <asp:LinkButton ID="lbtnLogin" URL="#" CssClass="user-item login-link" runat="server">Log In</asp:LinkButton>							
+							    </li>
+						    </ul>
+					    </div>
+				    </div>
+				    <br class="clear"/>
+			    </nav>
+		    </header>
+            
+		    <section id="main" class="page-panel">
+                <asp:ContentPlaceHolder ID="Content" runat="server"></asp:ContentPlaceHolder>
+            </section>
+            <footer id="footer">
+			    <section class="footer-body">
+				    <p class="powerby">Trabalho Final de LPC - 2013</p>
+			    </section>
+		    </footer>
+        </div>
+    </form>
+    <asp:ContentPlaceHolder ID="scripts" runat="server"></asp:ContentPlaceHolder>
+</body>
+</html>
