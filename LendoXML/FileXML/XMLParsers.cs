@@ -16,10 +16,7 @@ namespace FileXML
         {
             List<Musica> musicas = new List<Musica>();
             XDocument doc = XDocument.Load(url);
-            XElement itens = doc
-                .Element("rss")
-                .Element("channel");
-            
+                        
             // LINQ, faz um pesquisa dentro do XML
             musicas = (from item in
                            doc.Descendants("item")

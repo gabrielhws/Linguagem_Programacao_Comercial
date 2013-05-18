@@ -23,7 +23,7 @@
         <ItemTemplate>
             <tr>
                 <td>
-                    <a href='<%# Eval("link") %>'>
+                    <a href='<%# Eval("link") %>' target="_blank">
                         <asp:Label ID="lblTitle" runat="server" Text='<%# Eval("title") %>' />
                     </a>
                 </td>
