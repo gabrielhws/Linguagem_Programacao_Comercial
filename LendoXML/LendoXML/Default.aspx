@@ -17,7 +17,7 @@
                     <th>PubDate</th>
                     <th>Description</th>
                 </tr>
-                <tr runat="server" id="itemPlaceholder"></tr>                    
+                <tr runat="server" id="itemPlaceholder"></tr>                        
             </table>
         </LayoutTemplate>
         <ItemTemplate>
