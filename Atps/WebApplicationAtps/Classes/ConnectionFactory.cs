@@ -18,9 +18,9 @@ namespace ATPS
         private string myConnectionString = ConfigurationManager.ConnectionStrings["atps"].ConnectionString;
 
         /*String de select*/
-        private string SQL_SELECT_LOGIN = @"SELECT _login, senha from usuario WHERE _login = @login and senha = @senha";
-        private string SQL_SELECT_DEPARTAMENTOS = @"SELECT codigo, descricao FROM departamento";
-        private string SQL_SELECT_DEPARTAMENTO_ID = @"SELECT codigo, descricao FROM departamento WHERE codigo = @id";
+        private string SQL_SELECT_LOGIN = @"SELECT _login, senha from usuario WHERE _login = @login and senha = @senha;";
+        private string SQL_SELECT_DEPARTAMENTOS = @"SELECT codigo, descricao FROM departamento;";
+        private string SQL_SELECT_DEPARTAMENTO_ID = @"SELECT codigo, descricao FROM departamento WHERE codigo = @id;";
         private string SQL_SELECT_MATERIAL = @"SELECT codigo, codigo_departamento, data, titulo, conteudo 
 	                                            FROM material 
 	                                            WHERE	codigo_departamento = @departamento 
@@ -76,11 +76,11 @@ namespace ATPS
                 while (reader.Read())
                 {
                     Departamento departamento = new Departamento();
-                    departamento.Codigo = (long)reader["codigo"];
-                    departamento.Descricao = (String)reader["descricao"];
+                    departamento.Codigo = reader.GetOrdinal("codigo");
+                    departamento.Descricao = reader.GetString(reader.GetOrdinal("descricao"));
                     departamentos.Add(departamento);
                 }
-
+                reader.Close();
                 return departamentos;
             }
             catch
@@ -171,6 +171,12 @@ namespace ATPS
         {
             if (conn != null)
                 conn.Close();
+        }
+
+        public List<Material> getMateriais()
+        {
+            List<Material> materiais = new List<Material>();
+            return materiais;
         }
     }
 }

@@ -12,6 +12,11 @@ namespace WebApplicationAtps
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ddlDepartamento.DataSource = new Departamento().getDepartamentos();
+            ddlDepartamento.DataBind();
+            ddlDepartamento.DataTextField = "Descricao";
+            ddlDepartamento.DataValueField = "Codigo";
+            ddlDepartamento.DataBind();
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

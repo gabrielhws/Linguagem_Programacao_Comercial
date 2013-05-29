@@ -9,7 +9,8 @@
 			<h1 class="title">Consulta de Material</h1>
 			<div class="label">                
                 <asp:Label ID="lblDepartamento" AssociatedControlID="ddlDepartamento"  runat="server">Departamento:</asp:Label>
-				<asp:DropDownList ID="ddlDepartamento" runat="server"></asp:DropDownList>
+				<asp:DropDownList ID="ddlDepartamento" runat="server">
+				</asp:DropDownList>
 			</div>
 						
 			<div class="label">

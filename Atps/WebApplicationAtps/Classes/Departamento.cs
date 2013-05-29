@@ -26,7 +26,7 @@ namespace ATPS
         {
         }
 
-        public List<Departamento> consultarDepartamento()
+        public List<Departamento> getDepartamentos()
         {
             ConnectionFactory con = new ConnectionFactory();
             return con.getDepartamentos();
