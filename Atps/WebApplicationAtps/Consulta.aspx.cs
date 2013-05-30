@@ -12,11 +12,7 @@ namespace WebApplicationAtps
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ddlDepartamento.DataSource = new Departamento().getDepartamentos();
-            ddlDepartamento.DataBind();
-            ddlDepartamento.DataTextField = "Descricao";
-            ddlDepartamento.DataValueField = "Codigo";
-            ddlDepartamento.DataBind();
+            setDropDown();
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -27,6 +23,16 @@ namespace WebApplicationAtps
         public IQueryable<Material> GetData() {
             Material material = new Material();
             return material.consultarMaterial().AsQueryable();
+        }
+
+        private void setDropDown() {
+            ddlDepartamento.DataSource = new Departamento().getDepartamentos();
+            ddlDepartamento.DataTextField = "Descricao";
+            ddlDepartamento.DataValueField = "Codigo";
+            ddlDepartamento.DataBind();
+
+            ddlDepartamento.Items.Insert(0, "Selecione o Departamento");
+            ddlDepartamento.SelectedIndex = 0;
         }
     }
 }

@@ -51,6 +51,7 @@ namespace ATPS
 
                 // verificar se possui algum retorno e atribui o valor verdadeiro se sim.
                 retorno = (reader.Read()) ? "true" : "Usuário/Senha incorretos!: " + login.Usuario;
+                reader.Close();
             }
             catch
             {
@@ -76,16 +77,17 @@ namespace ATPS
                 while (reader.Read())
                 {
                     Departamento departamento = new Departamento();
-                    departamento.Codigo = reader.GetOrdinal("codigo");
+                    departamento.Codigo = reader.GetInt32(reader.GetOrdinal("codigo"));
                     departamento.Descricao = reader.GetString(reader.GetOrdinal("descricao"));
                     departamentos.Add(departamento);
                 }
                 reader.Close();
                 return departamentos;
             }
-            catch
+            catch(Exception e)
             {
-                throw new Exception();
+                Console.WriteLine("Aught! {0}", e);
+                throw;
             }
             finally
             {
@@ -106,15 +108,17 @@ namespace ATPS
 
                 while (reader.Read())
                 {
-                    departamento.Codigo = (long)reader["codigo"];
-                    departamento.Descricao = (String)reader["descricao"];
+                    departamento.Codigo = reader.GetInt32(reader.GetOrdinal("codigo"));
+                    departamento.Descricao = reader.GetString(reader.GetOrdinal("descricao"));
                 }
 
+                reader.Close();
                 return departamento;
             }
-            catch
+            catch (Exception e)
             {
-                throw new Exception();
+                Console.WriteLine("Aught! {0}", e);
+                throw;
             }
             finally
             {
@@ -149,12 +153,13 @@ namespace ATPS
 
                     materias.Add(material);
                 }
-
+                reader.Close();
                 return materias;
             }
-            catch
+            catch (Exception e)
             {
-                throw new Exception();
+                Console.WriteLine("Aught! {0}", e);
+                throw;
             }
             finally
             {
