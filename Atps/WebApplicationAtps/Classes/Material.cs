@@ -55,10 +55,14 @@ namespace ATPS
         {
         }
 
-        public List<Material> consultarMaterial()
+        public List<Material> GetMateriais(DateTime de, DateTime ate)
         {
-            ConnectionFactory conn = new ConnectionFactory();
-            return conn.getMateriais();
+            ConnectionFactory factory = new ConnectionFactory();
+            return factory.getMateriais(this, de, ate);
+        }
+
+        public List<Material> GetMateriais() { 
+
         }
 
     }

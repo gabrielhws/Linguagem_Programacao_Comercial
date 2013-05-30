@@ -20,11 +20,6 @@ namespace WebApplicationAtps
 
         }
 
-        public IQueryable<Material> GetData() {
-            Material material = new Material();
-            return material.consultarMaterial().AsQueryable();
-        }
-
         private void setDropDown() {
             ddlDepartamento.DataSource = new Departamento().getDepartamentos();
             ddlDepartamento.DataTextField = "Descricao";

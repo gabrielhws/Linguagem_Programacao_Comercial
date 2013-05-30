@@ -28,8 +28,8 @@ namespace ATPS
 
         public List<Departamento> getDepartamentos()
         {
-            ConnectionFactory con = new ConnectionFactory();
-            return con.getDepartamentos();
+            ConnectionFactory factory = new ConnectionFactory();
+            return factory.GetDepartamentos();
         }
     }
 }

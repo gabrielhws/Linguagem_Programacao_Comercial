@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sistema.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplicationAtps.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/Sistema.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplicationAtps.Default" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     Login - Sistema de Gerenciamento de Qualidade
 </asp:Content>

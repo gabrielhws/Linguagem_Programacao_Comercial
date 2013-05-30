@@ -23,9 +23,7 @@ namespace ATPS
         private string SQL_SELECT_DEPARTAMENTO_ID = @"SELECT codigo, descricao FROM departamento WHERE codigo = @id;";
         private string SQL_SELECT_MATERIAL = @"SELECT codigo, codigo_departamento, data, titulo, conteudo 
 	                                            FROM material 
-	                                            WHERE	codigo_departamento = @departamento 
-			                                            AND titulo LIKE '%@titulo%' 
-			                                            AND data BETWEEN @de AND @ate;";
+	                                            WHERE	codigo_departamento = @departamento";
 
         public ConnectionFactory()
         {
@@ -34,7 +32,7 @@ namespace ATPS
         }
 
 
-        public string validar(Login login)
+        public string ValidarLogin(Login login)
         {
             string retorno = string.Empty;
 
@@ -64,7 +62,7 @@ namespace ATPS
             return retorno;
         }
 
-        public List<Departamento> getDepartamentos()
+        public List<Departamento> GetDepartamentos()
         {
             List<Departamento> departamentos = new List<Departamento>();
             try
@@ -84,7 +82,7 @@ namespace ATPS
                 reader.Close();
                 return departamentos;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Aught! {0}", e);
                 throw;
@@ -95,7 +93,7 @@ namespace ATPS
             }
         }
 
-        public Departamento getDepartamento(int id)
+        public Departamento GetDepartamento(int id)
         {
             Departamento departamento = new Departamento();
             try
@@ -131,6 +129,11 @@ namespace ATPS
             List<Material> materias = new List<Material>();
             try
             {
+                if (material.Titulo != String.Empty)
+                    SQL_SELECT_MATERIAL += " AND titulo LIKE '%@titulo%'";
+                if (de != null && ate != null)
+                    SQL_SELECT_MATERIAL += " AND data BETWEEN @de AND @ate;";
+
                 cmd = new SqlCommand(SQL_SELECT_MATERIAL, conn);
                 open();
 
@@ -145,11 +148,11 @@ namespace ATPS
                 {
                     material = new Material();
 
-                    material.Codigo = (long)reader["codigo"];
-                    material.Departamento = getDepartamento((int)reader["codigo_departamento"]);
-                    material.Titulo = (String)reader["titulo"];
-                    material.Conteudo = (String)reader["conteudo"];
-                    material.Data = (DateTime)reader["data"];
+                    material.Codigo = reader.GetInt32(reader.GetOrdinal("codigo"));
+                    material.Departamento = GetDepartamento(reader.GetInt32(reader.GetOrdinal("codigo_departamento")));
+                    material.Titulo = reader.GetString(reader.GetOrdinal("titulo"));
+                    material.Conteudo = reader.GetString(reader.GetOrdinal("conteudo"));
+                    material.Data = reader.GetDateTime(reader.GetOrdinal("data"));
 
                     materias.Add(material);
                 }
@@ -178,10 +181,5 @@ namespace ATPS
                 conn.Close();
         }
 
-        public List<Material> getMateriais()
-        {
-            List<Material> materiais = new List<Material>();
-            return materiais;
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Sistema.Master" AutoEventWireup="true" CodeBehind="Consulta.aspx.cs" Inherits="WebApplicationAtps.Consulta" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/Sistema.Master" AutoEventWireup="true" CodeBehind="Consulta.aspx.cs" Inherits="WebApplicationAtps.Consulta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
     Consulta de Material - Sistema de Gerenciamento de Qualidade
 </asp:Content>
