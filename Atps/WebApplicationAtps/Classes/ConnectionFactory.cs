@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+using System.Text;
 
 namespace ATPS
 {
@@ -21,9 +22,7 @@ namespace ATPS
         private string SQL_SELECT_LOGIN = @"SELECT _login, senha from usuario WHERE _login = @login and senha = @senha;";
         private string SQL_SELECT_DEPARTAMENTOS = @"SELECT codigo, descricao FROM departamento;";
         private string SQL_SELECT_DEPARTAMENTO_ID = @"SELECT codigo, descricao FROM departamento WHERE codigo = @id;";
-        private string SQL_SELECT_MATERIAL = @"SELECT codigo, codigo_departamento, data, titulo, conteudo 
-	                                            FROM material 
-	                                            WHERE	codigo_departamento = @departamento";
+        private StringBuilder SQL_SELECT_MATERIAL= new StringBuilder("SELECT codigo, codigo_departamento, data, titulo, conteudo FROM material WHERE 1=1 ");
 
         public ConnectionFactory()
         {
@@ -93,7 +92,7 @@ namespace ATPS
             }
         }
 
-        public Departamento GetDepartamento(int id)
+        public Departamento GetDepartamento(long id)
         {
             Departamento departamento = new Departamento();
             try
@@ -124,23 +123,19 @@ namespace ATPS
             }
         }
 
-        public List<Material> getMateriais(Material material, DateTime de, DateTime ate)
+
+        public List<Material> GetMateriais(Material material, DateTime de, DateTime ate)
         {
+            montaSqlQueryMaterial(material, de, ate);
+
             List<Material> materias = new List<Material>();
             try
             {
-                if (material.Titulo != String.Empty)
-                    SQL_SELECT_MATERIAL += " AND titulo LIKE '%@titulo%'";
-                if (de != null && ate != null)
-                    SQL_SELECT_MATERIAL += " AND data BETWEEN @de AND @ate;";
 
-                cmd = new SqlCommand(SQL_SELECT_MATERIAL, conn);
+                cmd = new SqlCommand(SQL_SELECT_MATERIAL.ToString(), conn);
                 open();
 
-                cmd.Parameters.Add("@departamento", SqlDbType.Int).Value = material.Departamento.Codigo;
-                cmd.Parameters.Add("@titulo", SqlDbType.VarChar).Value = material.Titulo;
-                cmd.Parameters.Add("@de", SqlDbType.DateTime).Value = de;
-                cmd.Parameters.Add("@ate", SqlDbType.DateTime).Value = ate;
+                cmd = montaSqlParametersMaterial(material, de, ate, cmd);
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -149,7 +144,7 @@ namespace ATPS
                     material = new Material();
 
                     material.Codigo = reader.GetInt32(reader.GetOrdinal("codigo"));
-                    material.Departamento = GetDepartamento(reader.GetInt32(reader.GetOrdinal("codigo_departamento")));
+                    material.Departamento = new Departamento(reader.GetInt32(reader.GetOrdinal("codigo_departamento"))).GetDepartamento();
                     material.Titulo = reader.GetString(reader.GetOrdinal("titulo"));
                     material.Conteudo = reader.GetString(reader.GetOrdinal("conteudo"));
                     material.Data = reader.GetDateTime(reader.GetOrdinal("data"));
@@ -168,6 +163,44 @@ namespace ATPS
             {
                 close();
             }
+        }
+
+        private SqlCommand montaSqlParametersMaterial(Material material, DateTime de, DateTime ate, SqlCommand cmd)
+        {
+            DateTime nulo = DateTime.Parse("01/01/0001");
+
+            if (material.Departamento.Codigo != 0)
+                cmd.Parameters.Add("@departamento", SqlDbType.Int).Value = material.Departamento.Codigo;
+            if (material.Titulo != String.Empty)
+                cmd.Parameters.Add("@titulo", SqlDbType.VarChar).Value = "%"+ material.Titulo+"%";
+            if(de != nulo)
+                cmd.Parameters.Add("@de", SqlDbType.DateTime).Value = de;
+            if (ate != nulo)
+                cmd.Parameters.Add("@ate", SqlDbType.DateTime).Value = ate;
+            if (de != nulo && ate != nulo)
+            {
+                cmd.Parameters.Add("@de", SqlDbType.DateTime).Value = de;
+                cmd.Parameters.Add("@ate", SqlDbType.DateTime).Value = ate;
+            }
+
+            return cmd;
+        }
+
+        private void montaSqlQueryMaterial(Material material, DateTime de, DateTime ate)
+        {
+            DateTime nulo = DateTime.Parse("01/01/0001");
+
+            if (material.Departamento.Codigo != 0)
+                SQL_SELECT_MATERIAL.Append(" AND codigo_departamento = @departamento");
+            if (material.Titulo != String.Empty)
+                SQL_SELECT_MATERIAL.Append(" AND titulo LIKE @titulo");
+            if (de != nulo)
+                SQL_SELECT_MATERIAL.Append(" AND data >= @de");
+            if (ate != nulo)
+                SQL_SELECT_MATERIAL.Append(" AND data <= @ate");
+            if (de != nulo && ate != nulo)
+                SQL_SELECT_MATERIAL.Append(" AND data BETWEEN @de AND @ate;");
+            SQL_SELECT_MATERIAL.Append(";");
         }
 
         public void open()

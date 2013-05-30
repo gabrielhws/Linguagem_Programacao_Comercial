@@ -41,8 +41,8 @@ namespace ATPS
 
         public string validarAcesso()
         {
-            ConnectionFactory c = new ConnectionFactory();
-            return c.validar(this);
+            ConnectionFactory factory = new ConnectionFactory();
+            return factory.ValidarLogin(this);
         }
 
 

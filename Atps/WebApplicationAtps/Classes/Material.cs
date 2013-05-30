@@ -58,12 +58,9 @@ namespace ATPS
         public List<Material> GetMateriais(DateTime de, DateTime ate)
         {
             ConnectionFactory factory = new ConnectionFactory();
-            return factory.getMateriais(this, de, ate);
+            return factory.GetMateriais(this, de, ate);
         }
 
-        public List<Material> GetMateriais() { 
-
-        }
 
     }
 }

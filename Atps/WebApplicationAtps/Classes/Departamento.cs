@@ -26,7 +26,17 @@ namespace ATPS
         {
         }
 
-        public List<Departamento> getDepartamentos()
+        public Departamento(long codigo)
+        {
+            this.Codigo = codigo;
+        }
+
+        public Departamento GetDepartamento() {
+            ConnectionFactory factory = new ConnectionFactory();
+            return factory.GetDepartamento(this.Codigo);
+        }
+
+        public List<Departamento> GetDepartamentos()
         {
             ConnectionFactory factory = new ConnectionFactory();
             return factory.GetDepartamentos();

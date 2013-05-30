@@ -7,9 +7,13 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="search">
 			<h1 class="title">Consulta de Material</h1>
+            <asp:Label ID="lblRetorno" runat="server"></asp:Label>
 			<div class="label">                
                 <asp:Label ID="lblDepartamento" AssociatedControlID="ddlDepartamento"  runat="server">Departamento:</asp:Label>
-				<asp:DropDownList ID="ddlDepartamento" runat="server">
+				<asp:DropDownList 
+                    runat="server" 
+                    ID="ddlDepartamento" 
+                    AutoPostBack="True" >
 				</asp:DropDownList>
 			</div>
 						
@@ -28,16 +32,17 @@
             <asp:Button ID="btnBuscar" Text="Buscar" runat="server" OnClick="btnBuscar_Click"/>
     </div>
 	<div class="results">
-        <asp:ListView runat="server"
-            DataKeyNames="codigo" 
-            ItemType="ATPS.Material"
-            SelectMethod="GetData">
+        <asp:ListView runat="server" ID="lvMateriais">
 
             <LayoutTemplate>
                 <table>
                     <tr runat="server" id="itemPlaceholder"></tr>
                 </table>
             </LayoutTemplate>
+
+            <EmptyItemTemplate>
+                <p>Nenhum resultado encontrado!</p>
+            </EmptyItemTemplate>
 
             <ItemTemplate>
                 <tr>
@@ -57,9 +62,7 @@
 			    </tr>
 			    <tr>
 				    <td colspan="2">
-					    
-				    <td><%# Eval("Conteudo") %></td>
-				    </td>
+					<%# Eval("Conteudo") %></td>
 			    </tr>
             </ItemTemplate>
         </asp:ListView>				

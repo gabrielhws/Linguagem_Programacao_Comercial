@@ -93,22 +93,22 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sistema.Master.cs">
+    <Compile Include="MasterPage\Sistema.Master.cs">
       <DependentUpon>Sistema.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Sistema.Master.designer.cs">
+    <Compile Include="MasterPage\Sistema.Master.designer.cs">
       <DependentUpon>Sistema.Master</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sistema.Master" />
+    <Content Include="MasterPage\Sistema.Master" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClassDiagram1.cd" />
+    <Content Include="Classes\Diagram.cd" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
