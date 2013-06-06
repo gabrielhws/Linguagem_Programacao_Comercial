@@ -57,6 +57,9 @@ namespace ATPS
 
         public List<Material> GetMateriais(DateTime de, DateTime ate)
         {
+            // Instância um novo objeto da Classe ConnectionFactory
+            // e retorna a lista de materiais do banco de dados
+            // de acordo com o dados passados no parâmetro
             ConnectionFactory factory = new ConnectionFactory();
             return factory.GetMateriais(this, de, ate);
         }

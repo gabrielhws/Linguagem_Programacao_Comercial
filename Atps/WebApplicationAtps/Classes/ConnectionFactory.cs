@@ -30,7 +30,7 @@ namespace ATPS
             conn = new SqlConnection(myConnectionString);
         }
 
-
+        // Metodo que valida o login no banco de dados
         public string ValidarLogin(Login login)
         {
             string retorno = string.Empty;
@@ -39,11 +39,13 @@ namespace ATPS
             {
                 cmd = new SqlCommand(SQL_SELECT_LOGIN, conn);
 
+                // metodo que abre a conexão ao banco de dados
                 open();
 
+                // adiciona os parâmetros ao sql que será consultado
                 cmd.Parameters.Add("@login", SqlDbType.VarChar).Value = login.Usuario;
                 cmd.Parameters.Add("@senha", SqlDbType.VarChar).Value = login.Senha;
-
+                // executa o sql
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 // verificar se possui algum retorno e atribui o valor verdadeiro se sim.
@@ -56,6 +58,7 @@ namespace ATPS
             }
             finally
             {
+                // metodo que finaliza a conexão
                 close();
             }
             return retorno;
@@ -67,15 +70,18 @@ namespace ATPS
             try
             {
                 cmd = new SqlCommand(SQL_SELECT_DEPARTAMENTOS, conn);
+                // metodo que abre a conexão ao banco de dados
                 open();
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
+                    // Instância um novo objeto a cada resultado do banco de dados
                     Departamento departamento = new Departamento();
                     departamento.Codigo = reader.GetInt32(reader.GetOrdinal("codigo"));
                     departamento.Descricao = reader.GetString(reader.GetOrdinal("descricao"));
+                    // Adiciona o departamento a Lista 
                     departamentos.Add(departamento);
                 }
                 reader.Close();
@@ -88,6 +94,7 @@ namespace ATPS
             }
             finally
             {
+                // metodo que finaliza a conexão
                 close();
             }
         }
@@ -98,8 +105,10 @@ namespace ATPS
             try
             {
                 cmd = new SqlCommand(SQL_SELECT_DEPARTAMENTO_ID, conn);
+                // metodo que abre a conexão ao banco de dados
                 open();
 
+                // adiciona o parâmetro ao sql que será consultado
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -119,6 +128,7 @@ namespace ATPS
             }
             finally
             {
+                // metodo que finaliza a conexão
                 close();
             }
         }
@@ -126,33 +136,39 @@ namespace ATPS
 
         public List<Material> GetMateriais(Material material, DateTime de, DateTime ate)
         {
+            // monta o sql de consulta de acordo com as caracteristicas da buscas
             montaSqlQueryMaterial(material, de, ate);
 
-            List<Material> materias = new List<Material>();
+            List<Material> materiais = new List<Material>();
             try
             {
 
                 cmd = new SqlCommand(SQL_SELECT_MATERIAL.ToString(), conn);
+                // metodo que abre a conexão ao banco de dados
                 open();
 
+                // Adiciona os parâmetros de acordo com as caracteristicas da buscas
                 cmd = montaSqlParametersMaterial(material, de, ate, cmd);
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
+                    // Instância um novo objeto a cada resultado do banco de dados
                     material = new Material();
 
                     material.Codigo = reader.GetInt32(reader.GetOrdinal("codigo"));
+                    // Consulta o departamento e seta o retorno ao atributo departamento do material
                     material.Departamento = new Departamento(reader.GetInt32(reader.GetOrdinal("codigo_departamento"))).GetDepartamento();
                     material.Titulo = reader.GetString(reader.GetOrdinal("titulo"));
                     material.Conteudo = reader.GetString(reader.GetOrdinal("conteudo"));
                     material.Data = reader.GetDateTime(reader.GetOrdinal("data"));
 
-                    materias.Add(material);
+                    // Adiciona o material a Lista 
+                    materiais.Add(material);
                 }
                 reader.Close();
-                return materias;
+                return materiais;
             }
             catch (Exception e)
             {
@@ -161,6 +177,7 @@ namespace ATPS
             }
             finally
             {
+                // finaliza a conexão
                 close();
             }
         }
@@ -173,9 +190,9 @@ namespace ATPS
                 cmd.Parameters.Add("@departamento", SqlDbType.Int).Value = material.Departamento.Codigo;
             if (material.Titulo != String.Empty)
                 cmd.Parameters.Add("@titulo", SqlDbType.VarChar).Value = "%"+ material.Titulo+"%";
-            if(de != nulo)
+            if(de != nulo && ate == nulo)
                 cmd.Parameters.Add("@de", SqlDbType.DateTime).Value = de;
-            if (ate != nulo)
+            if (ate != nulo && de == nulo)
                 cmd.Parameters.Add("@ate", SqlDbType.DateTime).Value = ate;
             if (de != nulo && ate != nulo)
             {
@@ -194,9 +211,9 @@ namespace ATPS
                 SQL_SELECT_MATERIAL.Append(" AND codigo_departamento = @departamento");
             if (material.Titulo != String.Empty)
                 SQL_SELECT_MATERIAL.Append(" AND titulo LIKE @titulo");
-            if (de != nulo)
+            if (de != nulo && ate == nulo)
                 SQL_SELECT_MATERIAL.Append(" AND data >= @de");
-            if (ate != nulo)
+            if (ate != nulo && de == nulo)
                 SQL_SELECT_MATERIAL.Append(" AND data <= @ate");
             if (de != nulo && ate != nulo)
                 SQL_SELECT_MATERIAL.Append(" AND data BETWEEN @de AND @ate;");
@@ -210,6 +227,7 @@ namespace ATPS
 
         public void close()
         {
+            // verifica se a conexão e diferente de nula e finaliza-a 
             if (conn != null)
                 conn.Close();
         }

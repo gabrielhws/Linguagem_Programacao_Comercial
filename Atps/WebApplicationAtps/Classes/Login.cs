@@ -41,6 +41,8 @@ namespace ATPS
 
         public string validarAcesso()
         {
+            // Instância um novo objeto da Classe ConnectionFactory
+            // e retorna uma string com o resultado da validação do login
             ConnectionFactory factory = new ConnectionFactory();
             return factory.ValidarLogin(this);
         }

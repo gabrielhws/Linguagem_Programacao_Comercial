@@ -10,6 +10,6 @@
 <asp:TextBox ID="txtSenha" runat="server" TextMode="Password"/>
 <br />
 
-<asp:Button ID="btnLogin" runat="server" Text="Logar!" OnClick="btnLogin_Click" />
+<asp:Button ID="btnLogin" runat="server" Text="Logar!" OnClick="btnLogin_Click1" />
 
 

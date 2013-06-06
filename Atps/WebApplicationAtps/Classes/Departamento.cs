@@ -32,12 +32,17 @@ namespace ATPS
         }
 
         public Departamento GetDepartamento() {
+            // Instância um novo objeto da Classe ConnectionFactory
+            // e retorna um objeto da Classe departamento de acordo
+            // com o código passado no parâmetro
             ConnectionFactory factory = new ConnectionFactory();
             return factory.GetDepartamento(this.Codigo);
         }
 
         public List<Departamento> GetDepartamentos()
         {
+            // Instância um novo objeto da Classe ConnectionFactory
+            // e retorna a lista de departamentos do banco de dados
             ConnectionFactory factory = new ConnectionFactory();
             return factory.GetDepartamentos();
         }
